@@ -11,7 +11,7 @@ import SectionSeparator from '../../components/section-separator'
 import Layout from '../../components/layout'
 import PostTitle from '../../components/post-title'
 import Tags from '../../components/tags'
-import { getAllPostsWithSlug, getPostAndMorePosts } from '../../lib/api'
+import { getPostAndMorePosts } from '../../lib/api'
 import { CMS_NAME } from '../../lib/constants'
 
 export default function Post({ post, posts, preview }) {
@@ -75,15 +75,13 @@ export const getStaticProps: GetStaticProps = async ({
       post: data.post,
       posts: data.posts,
     },
-    revalidate: 10,
+    revalidate: 10, // ISR: halaman akan regenerate tiap 10 detik
   }
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const allPosts = await getAllPostsWithSlug()
-
   return {
-    paths: allPosts.edges.map(({ node }) => `/posts/${node.slug}`) || [],
-    fallback: true,
+    paths: [], // tidak pre-build semua post
+    fallback: 'blocking', // build saat pertama kali diakses
   }
 }
