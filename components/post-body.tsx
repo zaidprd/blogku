@@ -1,12 +1,12 @@
-import styles from './post-body.module.css'
-
+// components/post-body.tsx (Setelah direvisi)
 export default function PostBody({ content }) {
   return (
-    <div className="max-w-2xl mx-auto">
+    // Hapus kelas pembatas lebar seperti max-w-* atau mx-auto
+    <div>
       <div
-        className={styles.content}
+        className="prose"
         dangerouslySetInnerHTML={{ __html: content }}
       />
     </div>
-  )
+  );
 }

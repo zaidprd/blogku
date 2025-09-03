@@ -7,6 +7,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        // Mendefinisikan warna brand utama
+        brand: {
+          blue: '#1d4ed8', // blue-700
+          indigo: '#4f46e5', // indigo-800
+          light: '#f9fafb', // gray-50
+          secondary: '#334155', // slate-700
+        },
         'accent-1': '#FAFAFA',
         'accent-2': '#EAEAEA',
         'accent-7': '#333',
@@ -36,6 +43,23 @@ module.exports = {
   },
   plugins: [require('daisyui')],
   daisyui: {
-    themes: ['light', 'synthwave'],
+    themes: [
+      'light',
+      'synthwave',
+      // Tambahkan tema kustom untuk mencocokkan brand
+      {
+        mytheme: {
+          "primary": "#1d4ed8",
+          "secondary": "#4f46e5",
+          "accent": "#4f46e5",
+          "neutral": "#334155",
+          "base-100": "#ffffff",
+          "info": "#67e8f9",
+          "success": "#10b981",
+          "warning": "#f59e0b",
+          "error": "#ef4444",
+        },
+      },
+    ],
   },
 }

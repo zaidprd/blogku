@@ -1,28 +1,42 @@
 import Container from './container'
-import { EXAMPLE_PATH } from '../lib/constants'
 
 export default function Footer() {
   return (
-    <footer className="bg-base-100 border-t border-accent-2">
+    <footer className="bg-gray-50 border-t border-gray-200">
       <Container>
-        <div className="py-28 flex flex-col lg:flex-row items-center">
-          <h3 className="text-base text-4xl lg:text-5xl font-bold tracking-tighter leading-tight text-center lg:text-left mb-10 lg:mb-0 lg:pr-4 lg:w-1/2">
-            Yajodoh
-          </h3>
-          <div className="flex flex-col lg:flex-row justify-center items-center lg:pl-4 lg:w-1/2">
+        <div className="py-20 flex flex-col lg:flex-row items-center justify-between">
+          {/* Logo dan Slogan */}
+          <div className="flex flex-col items-center lg:items-start mb-8 lg:mb-0 lg:w-1/2">
+            <h3 className="text-4xl font-bold tracking-tighter leading-tight text-center lg:text-left">
+              Yajodoh
+            </h3>
+            <p className="text-lg text-gray-600 mt-2 text-center lg:text-left">
+              Bikin website jadi mudah.
+            </p>
+          </div>
+
+          {/* Tombol Aksi */}
+          <div className="flex flex-col lg:flex-row justify-center items-center lg:w-1/2 lg:pl-4">
             <a
-              href="https://nextjs.org/docs/basic-features/pages"
-              className="mx-3 bg-black hover:bg-white hover:text-black border border-black text-white font-bold py-3 px-12 lg:px-8 duration-200 transition-colors mb-6 lg:mb-0"
+              href="#harga"
+              className="mx-3 bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 px-12 lg:px-8 duration-200 transition-colors mb-6 lg:mb-0 rounded-full"
             >
-              Read Documentation
+              Lihat Paket Harga
             </a>
             <a
-              href={`https://github.com/vercel/next.js/tree/canary/examples/${EXAMPLE_PATH}`}
-              className="mx-3 font-bold hover:underline"
+              href="mailto:email@yajodoh.com"
+              className="mx-3 font-bold text-gray-700 hover:underline"
             >
-              View on GitHub
+              Hubungi Kami
             </a>
           </div>
+        </div>
+
+        {/* Hak Cipta */}
+        <div className="mt-8 pt-6 text-center border-t border-gray-200">
+          <p className="text-sm text-gray-500 mb-1">
+            © 2024 Ya Jodoh | All Rights Reserved.
+          </p>
         </div>
       </Container>
     </footer>
