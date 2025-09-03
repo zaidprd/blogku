@@ -15,7 +15,7 @@ export default function Index({ allPosts: { edges }, preview }) {
   return (
     <Layout preview={preview}>
       <Head>
-        <title>{`Curious Byte NextJS ${CMS_NAME} Blog`}</title>
+        <title>{`yajodoh ${CMS_NAME} Blog`}</title>
       </Head>
       <Container>
         <Intro />
