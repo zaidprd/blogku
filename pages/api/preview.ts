@@ -1,29 +1,33 @@
-import { NextApiRequest, NextApiResponse } from "next"
-import { getPreviewPost } from "../../lib/api"
+import { NextApiRequest, NextApiResponse } from 'next'
+import { getPreviewPost } from '../../lib/api'
 
 export default async function preview(req: NextApiRequest, res: NextApiResponse) {
-  const { id, slug } = req.query
+  const { secret, id, slug } = req.query
 
-  // Pastikan id & slug jadi string
-  const idString = Array.isArray(id) ? id[0] : id
-  const slugString = Array.isArray(slug) ? slug[0] : slug
-
-  if (!idString && !slugString) {
-    return res.status(400).json({ message: "Missing id or slug" })
+  // Cek token preview
+  if (secret !== process.env.WORDPRESS_PREVIEW_SECRET || (!id && !slug)) {
+    return res.status(401).json({ message: 'Invalid token' })
   }
 
-  // Fetch WordPress to check if the provided `id` or `slug` exists
+  // Pastikan slug dan id dalam bentuk string
+  const postId = Array.isArray(id) ? id[0] : id
+  const postSlug = Array.isArray(slug) ? slug[0] : slug
+
+  // Ambil data post dari WordPress
   const post = await getPreviewPost(
-    idString || slugString || "",
-    idString ? "DATABASE_ID" : "SLUG"
+    postId || postSlug,
+    postId ? 'DATABASE_ID' : 'SLUG'
   )
 
-  // If the post doesn't exist prevent preview mode from being enabled
+  // Jika post tidak ada, hentikan preview
   if (!post) {
-    return res.status(401).json({ message: "Post not found" })
+    return res.status(401).json({ message: 'Post not found' })
   }
 
+  // Set preview mode
   res.setPreviewData({})
+
+  // Redirect ke halaman post
   res.writeHead(307, { Location: `/posts/${post.slug}` })
   res.end()
 }
