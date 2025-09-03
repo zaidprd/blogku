@@ -7,14 +7,10 @@ async function fetchAPI(query = '', { variables }: Record<string, any> = {}) {
     headers['Authorization'] = `Bearer ${process.env.WORDPRESS_AUTH_REFRESH_TOKEN}`
   }
 
-  // WPGraphQL Plugin must be enabled
   const res = await fetch(API_URL as string, {
     headers,
     method: 'POST',
-    body: JSON.stringify({
-      query,
-      variables,
-    }),
+    body: JSON.stringify({ query, variables }),
   })
 
   const json = await res.json()
@@ -35,9 +31,7 @@ export async function getPreviewPost(id: string, idType = 'DATABASE_ID') {
         status
       }
     }`,
-    {
-      variables: { id, idType },
-    }
+    { variables: { id, idType } }
   )
   return data.post
 }
@@ -57,11 +51,11 @@ export async function getAllPostsWithSlug() {
   return data?.posts
 }
 
-export async function getAllPostsForHome(preview = false) {
+export async function getAllPostsForHome(preview: boolean) {
   const data = await fetchAPI(
     `
     query AllPosts {
-      posts(first: 10, where: { orderby: { field: DATE, order: DESC } }) {
+      posts(first: 20, where: { orderby: { field: DATE, order: DESC } }) {
         edges {
           node {
             title
@@ -76,6 +70,11 @@ export async function getAllPostsForHome(preview = false) {
             author {
               node {
                 name
+                firstName
+                lastName
+                avatar {
+                  url
+                }
               }
             }
           }
@@ -83,22 +82,13 @@ export async function getAllPostsForHome(preview = false) {
       }
     }
   `,
-    {
-      variables: {
-        onlyEnabled: !preview,
-        preview,
-      },
-    }
+    { variables: { onlyEnabled: !preview, preview } }
   )
 
   return data?.posts
 }
 
-export async function getPostAndMorePosts(
-  slug: string,
-  preview = false,
-  previewData?: any
-) {
+export async function getPostAndMorePosts(slug: string, preview: boolean, previewData: any) {
   const postPreview = preview && previewData?.post
   const isId = Number.isInteger(Number(slug))
   const isSamePost = isId
@@ -113,39 +103,17 @@ export async function getPostAndMorePosts(
       name
       firstName
       lastName
-      avatar {
-        url
-      }
+      avatar { url }
     }
     fragment PostFields on Post {
       title
       excerpt
       slug
       date
-      featuredImage {
-        node {
-          sourceUrl
-        }
-      }
-      author {
-        node {
-          ...AuthorFields
-        }
-      }
-      categories {
-        edges {
-          node {
-            name
-          }
-        }
-      }
-      tags {
-        edges {
-          node {
-            name
-          }
-        }
-      }
+      featuredImage { node { sourceUrl } }
+      author { node { ...AuthorFields } }
+      categories { edges { node { name } } }
+      tags { edges { node { name } } }
     }
     query PostBySlug($id: ID!, $idType: PostIdType!) {
       post(id: $id, idType: $idType) {
@@ -160,24 +128,15 @@ export async function getPostAndMorePosts(
               title
               excerpt
               content
-              author {
-                node {
-                  ...AuthorFields
-                }
-              }
+              author { node { ...AuthorFields } }
             }
           }
-        }
-        `
+        }`
             : ''
         }
       }
       posts(first: 3, where: { orderby: { field: DATE, order: DESC } }) {
-        edges {
-          node {
-            ...PostFields
-          }
-        }
+        edges { node { ...PostFields } }
       }
     }
   `,
@@ -196,7 +155,7 @@ export async function getPostAndMorePosts(
     delete data.post.revisions
   }
 
-  data.posts.edges = data.posts.edges.filter(({ node }) => node.slug !== slug)
+  data.posts.edges = data.posts.edges.filter(({ node }: any) => node.slug !== slug)
   if (data.posts.edges.length > 2) data.posts.edges.pop()
 
   return data
