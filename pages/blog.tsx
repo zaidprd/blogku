@@ -16,7 +16,7 @@ export default function Index({ allPosts, preview }) {
   return (
     <Layout preview={preview}>
       <Head>
-        <title>{`yajodoh ${CMS_NAME} Blog`}</title>
+        <title>{CMS_NAME }</title>
       </Head>
       <Container>
         <Intro />

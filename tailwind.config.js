@@ -51,6 +51,7 @@ module.exports = {
         mytheme: {
           "primary": "#1d4ed8",
           "secondary": "#4f46e5",
+          "secondary-content": "#ffffff", // <-- secondary-content ditambahkan di sini
           "accent": "#4f46e5",
           "neutral": "#334155",
           "base-100": "#ffffff",

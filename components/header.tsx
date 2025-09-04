@@ -48,17 +48,17 @@ export default function Header() {
                 `}
               >
                 <Link href="/" className="hover:text-gray-900 transition duration-300">
-                  CuriousByte
+                  Yajodoh
                 </Link>
               </h2>
             </div>
 
             {/* Tautan Navigasi (Desktop) */}
             <nav className="hidden md:flex space-x-10">
-              <Link href="/" className="text-base font-medium text-gray-500 hover:text-gray-900 transition duration-300">
+              <Link href="/" className="text-base font-medium text-black hover:text-blue-600 transition duration-300">
                 Home
               </Link>
-              <Link href="/blog" className="text-base font-medium text-gray-500 hover:text-gray-900 transition duration-300">
+              <Link href="/blog" className="text-base font-medium text-black hover:text-blue-600 transition duration-300">
                 Blog
               </Link>
             </nav>
@@ -112,10 +112,10 @@ export default function Header() {
               </button>
             </div>
             <nav className="mt-6 flex flex-col space-y-4">
-              <Link href="/" onClick={toggleMenu} className="text-lg font-medium text-gray-700 hover:text-gray-900 transition duration-300">
+              <Link href="/" onClick={toggleMenu} className="text-lg font-medium text-black hover:text-blue-600 transition duration-300">
                 Home
               </Link>
-              <Link href="/blog" onClick={toggleMenu} className="text-lg font-medium text-gray-700 hover:text-gray-900 transition duration-300">
+              <Link href="/blog" onClick={toggleMenu} className="text-lg font-medium text-black hover:text-blue-600 transition duration-300">
                 Blog
               </Link>
             </nav>
